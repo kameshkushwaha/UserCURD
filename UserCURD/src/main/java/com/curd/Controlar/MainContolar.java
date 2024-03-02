@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -50,6 +51,22 @@ public class MainContolar {
 		map.put("status", 1);
 		map.put("message", "Record is Saved Successfully!");
 		return new ResponseEntity<>(map, HttpStatus.CREATED);
+	}
+
+    @GetMapping("/user/{id}")
+	public ResponseEntity<?> getUserById(@PathVariable Integer id) {
+		Map<String, Object> map = new LinkedHashMap<String, Object>();
+		try {
+			User user = userService.findById(id);
+			map.put("status", 1);
+			map.put("data", user);
+			return new ResponseEntity<>(map, HttpStatus.OK);
+		} catch (Exception ex) {
+			map.clear();
+			map.put("status", 0);
+			map.put("message", "Data is not found");
+			return new ResponseEntity<>(map, HttpStatus.NOT_FOUND);
+		}
 	}
 
 
