@@ -8,6 +8,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -45,6 +46,7 @@ public class MainContolar {
 	}
 
     // for saving tha data to Database
+	@CrossOrigin(origins = "https://vitejsviteamvxpu-5xch--5173--c9a8a620.local-credentialless.webcontainer.io")
     @PostMapping("/save")
 	public ResponseEntity<?> saveUser(@RequestBody User user) {
 		Map<String, Object> map = new LinkedHashMap<String, Object>();
@@ -69,7 +71,7 @@ public class MainContolar {
 			return new ResponseEntity<>(map, HttpStatus.NOT_FOUND);
 		}
 	}
-
+	 //for deleting tha data from Database by id
 	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<?> deleteUser(@PathVariable Integer id) {
 		Map<String, Object> map = new LinkedHashMap<String, Object>();
