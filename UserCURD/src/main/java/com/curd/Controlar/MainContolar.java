@@ -52,7 +52,7 @@ public class MainContolar {
 		map.put("message", "Record is Saved Successfully!");
 		return new ResponseEntity<>(map, HttpStatus.CREATED);
 	}
-
+// for getting tha data to Database by id
     @GetMapping("/user/{id}")
 	public ResponseEntity<?> getUserById(@PathVariable Integer id) {
 		Map<String, Object> map = new LinkedHashMap<String, Object>();
