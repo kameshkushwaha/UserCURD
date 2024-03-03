@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -71,6 +72,23 @@ public class MainContolar {
 			return new ResponseEntity<>(map, HttpStatus.NOT_FOUND);
 		}
 	}
+
+	// for getting tha data to Database by user Name
+    @GetMapping("username/{userName}")
+	public ResponseEntity<?> getUserByName(@PathVariable String userName) {
+		Map<String, Object> map = new LinkedHashMap<String, Object>();
+		try {
+			User user = userService.findbyUserName(userName);
+			map.put("status", 1);
+			map.put("data", user);
+			return new ResponseEntity<>(map, HttpStatus.OK);
+		} catch (Exception ex) {
+			map.clear();
+			map.put("status", 0);
+			map.put("message", "Data is not found");
+			return new ResponseEntity<>(map, HttpStatus.NOT_FOUND);
+		}
+	}
 	 //for deleting tha data from Database by id
 	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<?> deleteUser(@PathVariable Integer id) {
@@ -80,6 +98,28 @@ public class MainContolar {
 			userService.delete(user);
 			map.put("status", 1);
 			map.put("message", "Record is deleted successfully!");
+			return new ResponseEntity<>(map, HttpStatus.OK);
+		} catch (Exception ex) {
+			map.clear();
+			map.put("status", 0);
+			map.put("message", "Data is not found");
+			return new ResponseEntity<>(map, HttpStatus.NOT_FOUND);
+		}
+	}
+
+	@PutMapping("/update/{id}")
+	public ResponseEntity<?> updateUserById(@PathVariable Integer id, @RequestBody User userDetail) {
+		Map<String, Object> map = new LinkedHashMap<String, Object>();
+		try {
+			User user = userService.findById(id);
+			user.setUserName(userDetail.getUserName());
+			user.setMobileNo(userDetail.getMobileNo());
+			user.setEmailId(userDetail.getEmailId());
+			user.setCity(userDetail.getCity());
+			user.setPassword(userDetail.getPassword());
+			userService.save(user);
+			map.put("status", 1);
+			map.put("data", userService.findById(id));
 			return new ResponseEntity<>(map, HttpStatus.OK);
 		} catch (Exception ex) {
 			map.clear();

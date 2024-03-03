@@ -42,6 +42,13 @@ public class UserServiceImpl implements UserService {
          repo.delete(user);
     }
 
+    @Override
+    public User findbyUserName(String userName) {
+        // TODO Auto-generated method stub
+        return repo.findByUserName(userName);
+        
+    }
+
 
     
 }
