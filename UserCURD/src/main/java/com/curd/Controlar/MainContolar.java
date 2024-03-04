@@ -119,7 +119,10 @@ public class MainContolar {
 			user.setPassword(userDetail.getPassword());
 			userService.save(user);
 			map.put("status", 1);
+			map.put("Massage", "Data has been updated sucessfully");
 			map.put("data", userService.findById(id));
+			
+
 			return new ResponseEntity<>(map, HttpStatus.OK);
 		} catch (Exception ex) {
 			map.clear();
